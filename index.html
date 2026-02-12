@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stitcher 11 Interface</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #f4f4f9; }
+        .box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; }
+        input, select, textarea { width: 100%; margin: 10px 0; padding: 10px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
+        #output { margin-top: 20px; white-space: pre-wrap; background: #eee; padding: 10px; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>Agribot Stitcher</h2>
+        <input type="text" id="uid" placeholder="Student ID (e.g., Indrika_01)">
+        <select id="location">
+            <option value="Pollachi">Pollachi (High Humidity)</option>
+            <option value="Erode">Erode (Textile Dye)</option>
+            <option value="Salem">Salem (Rocky Soil)</option>
+        </select>
+        <textarea id="query" placeholder="Ask about your project..."></textarea>
+        <button onclick="sendToStitcher()">Send to AI</button>
+        <div id="output">Output will appear here...</div>
+    </div>
+
+    <script>
+        async function sendToStitcher() {
+            const uid = document.getElementById('uid').value;
+            const loc = document.getElementById('location').value;
+            const msg = document.getElementById('query').value;
+            const out = document.getElementById('output');
+
+            out.innerText = "Stitching context and calling AI...";
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/agri-chat?uid=${uid}&location=${loc}&query=${msg}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                out.innerText = "AI RESPONSE:\n" + data.ai_response + "\n\n--- STITCHED PROMPT ---\n" + data.stitched_prompt;
+            } catch (err) {
+                out.innerText = "Error: Is your local Uvicorn server running?";
+            }
+        }
+    </script>
+</body>
+</html>
