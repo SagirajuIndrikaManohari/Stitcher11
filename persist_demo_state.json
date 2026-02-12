@@ -1,0 +1,18 @@
+{
+    "student_id": "persist_demo",
+    "location": "Chennai",
+    "current_stage": 21,
+    "major_decisions": "No hardware selected yet.",
+    "interaction_count": 2,
+    "completed_milestones": [
+        {
+            "stage": 20,
+            "milestone": "Completed sensor selection",
+            "timestamp": null
+        }
+    ],
+    "episodic_buffer": [
+        "Student: First question about sensors",
+        "Student: Second question about data collection"
+    ]
+}
